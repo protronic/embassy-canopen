@@ -1,0 +1,9 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+# probe-rs chip list | grep 'STM32F303'
+runner = "probe-rs run --chip STM32F303VCTx"
+
+[build]
+target = "thumbv7em-none-eabihf"
+
+[env]
+DEFMT_LOG = "trace"

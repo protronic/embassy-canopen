@@ -1,0 +1,38 @@
+[package]
+name = "embassy-canopen"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+heapless = { version = "0.8", default-features = false }
+
+defmt = "0.3"
+defmt-rtt = "0.4"
+panic-probe = { version = "0.3", features = ["print-defmt"] }
+
+cortex-m = { version = "0.7.6", features = ["inline-asm", "critical-section-single-core"] }
+cortex-m-rt = "0.7.0"
+embassy-executor = { path = "lib/embassy/embassy-executor", features = ["arch-cortex-m", "executor-thread", "executor-interrupt", "defmt", "integrated-timers"] }
+
+embassy-sync = { path = "lib/embassy/embassy-sync" }
+embassy-futures = { path = "lib/embassy/embassy-futures" }
+
+embassy-time = { path = "lib/embassy/embassy-time", features = ["tick-hz-32_768"] }
+
+static_cell = "2"
+embedded-can = "0.4.1"
+
+embassy-stm32 = { path = "lib/embassy/embassy-stm32", features = [ "stm32f303vc", "unstable-pac", "memory-x", "time-driver-any", "exti"]  }
+
+[features]
+default = ["defmt"]
+
+defmt = ["embassy-stm32/defmt", "embassy-sync/defmt", "embassy-time/defmt", "embassy-time/defmt-timestamp-uptime"]
+
+[profile.dev]
+debug = 0
+
+[profile.release]
+debug = 2
