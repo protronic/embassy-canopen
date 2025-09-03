@@ -76,8 +76,8 @@ async fn main(spawner: Spawner) -> ! {
     let ctx = CONTEXT.init(Mutex::new(Context::new(7)));
     let (mut node, node_receiver, node_sender, heartbeat_producer) = Node::new(ctx, od, can_tx, can_rx, &CAN_RX_CHANNEL, &CAN_TX_CHANNEL);
 
-    spawner.spawn(node_receiver_task(node_receiver)).unwrap();
-    spawner.spawn(node_sender_task(node_sender)).unwrap();
-    spawner.spawn(node_heartbeat_producer_task(heartbeat_producer)).unwrap();
+    spawner.spawn(node_receiver_task(node_receiver).unwrap());
+    spawner.spawn(node_sender_task(node_sender).unwrap());
+    spawner.spawn(node_heartbeat_producer_task(heartbeat_producer).unwrap());
     node.process().await
 }
